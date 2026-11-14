@@ -1,0 +1,53 @@
+/* Design tokens. Every colour, size and timing on the site comes from here. */
+:root {
+  /* approved palette */
+  --obsidian: #080a0d;
+  --graphite: #171e26;
+  --silver: #aeb8c4;
+  --ice: #b8d7ea;
+  --white: #f1f4f7;
+
+  /* supporting values derived from the palette */
+  --surface: #0d1116; /* one step above the page */
+  --muted: #8b96a4; /* secondary text, 6.4:1 on obsidian */
+  --line: rgba(174, 184, 196, 0.16);
+  --line-strong: rgba(174, 184, 196, 0.34);
+  --ice-dim: rgba(184, 215, 234, 0.14);
+  --signal-rgb: 143, 211, 255; /* the accent as numbers, so it can fade and shift while scrolling */
+  --signal: rgb(var(--signal-rgb)); /* ice, turned up: glows and live elements only */
+  --grid: rgba(174, 184, 196, 0.07);
+
+  /* type */
+  /* headings and text-sized display type */
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", system-ui, sans-serif;
+  /* the few giant moments only: the name in the intro, "I build", the closing words, the footer name */
+  --font-hero: "Syne Variable", "Syne", system-ui, sans-serif;
+  --font-body: "Manrope Variable", "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --text-xs: 0.8125rem; /* 13 */
+  --text-sm: 0.9375rem; /* 15 */
+  --text-base: 1.0625rem; /* 17 */
+  --text-lg: clamp(1.125rem, 1.02rem + 0.4vw, 1.3rem);
+  --text-xl: clamp(1.35rem, 1.1rem + 1vw, 1.875rem);
+  --text-2xl: clamp(1.75rem, 1.2rem + 2.4vw, 3.25rem);
+  --text-3xl: clamp(2.1rem, 1rem + 4.6vw, 5rem);
+
+  /* space */
+  --gutter: clamp(1.125rem, 0.5rem + 2.6vw, 3rem);
+  --page: 78rem;
+  --section: clamp(4.5rem, 3rem + 7vw, 9rem);
+
+  /* shape */
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --fast: 160ms;
+  --slow: 480ms;
+
+  --nav-height: 3.25rem;
+  --nav-top: clamp(0.75rem, 0.4rem + 1vw, 1.25rem);
+}

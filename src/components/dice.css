@@ -1,0 +1,99 @@
+.leds {
+  display: inline-flex;
+  gap: 0.9em;
+  font-size: 1rem;
+}
+.led-col {
+  display: grid;
+  justify-items: center;
+  gap: 0.6em;
+}
+.led {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: rgba(174, 184, 196, 0.06);
+}
+.led[data-on] {
+  background: var(--ice);
+  border-color: var(--ice);
+  box-shadow: 0 0 1.1em rgba(184, 215, 234, 0.45);
+}
+.led-bit {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Graph-paper ground shared by the cover stand-in and the demo. */
+.leds-cover,
+.dice-demo {
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 2.5rem,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 2.5rem 100%,
+    var(--surface);
+}
+
+/* The panel that stands in for a cover photograph. */
+.leds-cover {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  container-type: size;
+}
+.leds-cover .leds {
+  font-size: clamp(0.5rem, 8cqw, 2.25rem);
+}
+
+.dice-demo {
+  display: grid;
+  gap: 2rem;
+  justify-items: center;
+  align-content: center;
+  padding: clamp(2rem, 1rem + 5vw, 4.5rem) 1.25rem;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.dice-display {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: center;
+}
+.dice-display .leds {
+  font-size: clamp(1.5rem, 1rem + 2.5vw, 2.75rem);
+}
+.dice-readout {
+  min-height: 3.5rem;
+  display: grid;
+  place-items: center;
+}
+.dice-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--white);
+}
+.dice-controls {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: center;
+}
+.dice-button {
+  min-height: 3.25rem;
+  padding-inline: 1.75rem;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  background: var(--obsidian);
+}
+.dice-button[data-held] {
+  background: var(--ice);
+  border-color: var(--ice);
+  color: var(--obsidian);
+}
+.dice-note {
+  max-width: 34ch;
+}

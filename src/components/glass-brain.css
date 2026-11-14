@@ -1,0 +1,92 @@
+.glass-brain {
+  background:
+    radial-gradient(24rem circle at 85% 50%, rgba(var(--signal-rgb), 0.16), transparent 70%),
+    linear-gradient(145deg, rgba(241, 244, 247, 0.09), rgba(241, 244, 247, 0.025));
+}
+.gb-body {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+  width: 100%;
+}
+.gb-text {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+}
+.gb-title {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+.gb-live {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0.75rem var(--signal);
+}
+
+.gb-net {
+  width: 100%;
+  max-width: 22rem;
+  justify-self: center;
+  overflow: visible;
+}
+.gb-net line {
+  stroke: rgba(var(--signal-rgb), 0.16);
+  stroke-width: 1;
+}
+.gb-net circle {
+  fill: var(--obsidian);
+  stroke: rgba(var(--signal-rgb), 0.7);
+  stroke-width: 1.5;
+}
+.gb-net circle[data-out] {
+  fill: var(--signal);
+  filter: drop-shadow(0 0 6px var(--signal));
+}
+
+/* a signal flowing left to right through the network, on a loop */
+@media (prefers-reduced-motion: no-preference) {
+  .gb-live {
+    animation: gb-pulse 1.8s ease-in-out infinite;
+  }
+  .gb-net line {
+    animation: gb-wire 2.8s ease-in-out infinite;
+  }
+  .gb-net circle:not([data-out]) {
+    animation: gb-node 2.8s ease-in-out infinite;
+  }
+  @keyframes gb-pulse {
+    50% {
+      opacity: 0.3;
+    }
+  }
+  @keyframes gb-wire {
+    0%,
+    100% {
+      stroke: rgba(var(--signal-rgb), 0.12);
+    }
+    30% {
+      stroke: rgba(var(--signal-rgb), 0.6);
+    }
+  }
+  @keyframes gb-node {
+    0%,
+    100% {
+      fill: var(--obsidian);
+    }
+    30% {
+      fill: rgba(var(--signal-rgb), 0.55);
+    }
+  }
+}
+
+@media (min-width: 48rem) {
+  .gb-body {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+}

@@ -1,0 +1,341 @@
+/* Reset, page-level typography, and the handful of shared layout pieces. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--obsidian);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-height) + var(--nav-top) + 1.5rem);
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  color: var(--silver);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* The room: a faint drafting grid and one cold light from the top right. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(64rem 38rem at 85% -12%, rgba(var(--signal-rgb), 0.13), transparent 70%),
+    linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 4.5rem,
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px) 50% 0 / 4.5rem 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ice);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+::selection {
+  background: var(--ice);
+  color: var(--obsidian);
+}
+
+/* ---- layout ---- */
+
+.shell {
+  width: min(100% - 2 * var(--gutter), var(--page));
+  margin-inline: auto;
+}
+
+main {
+  display: block;
+  padding-top: calc(var(--nav-height) + var(--nav-top));
+}
+
+.skip {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--white);
+  color: var(--obsidian);
+  border-radius: var(--radius-sm);
+  transform: translateY(-200%);
+}
+.skip:focus {
+  transform: none;
+}
+
+/* Page header used by every page except Home. */
+.page-head {
+  padding-block: clamp(3rem, 2rem + 6vw, 7rem) clamp(2rem, 1.5rem + 3vw, 4rem);
+  display: grid;
+  gap: 1.25rem;
+}
+.page-head h1 {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  padding-bottom: 0.08em; /* room for descenders such as the j in "Projects" */
+  max-width: 18ch;
+}
+.page-head .lede {
+  max-width: 56ch;
+}
+
+.lede {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--silver);
+}
+
+/* Small technical label: mono, sentence case, quiet. */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--muted);
+  letter-spacing: 0;
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+.section {
+  padding-block: var(--section);
+}
+
+.section-title {
+  font-size: var(--text-xl);
+}
+
+.prose {
+  display: grid;
+  gap: 1.1em;
+  max-width: 62ch;
+}
+
+/* ---- links and buttons ---- */
+
+.link {
+  color: var(--white);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.28em;
+  transition: text-decoration-color var(--fast) ease;
+}
+.link:hover {
+  text-decoration-color: var(--ice);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 2.875rem;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--white);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition:
+    background var(--fast) ease,
+    border-color var(--fast) ease,
+    color var(--fast) ease;
+}
+.button:hover {
+  border-color: var(--silver);
+  background: rgba(174, 184, 196, 0.08);
+}
+.button--solid {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--obsidian);
+  box-shadow: 0 0 2rem -0.5rem rgba(var(--signal-rgb), 0.7);
+}
+.button--solid:hover {
+  background: var(--signal);
+  border-color: var(--signal);
+  box-shadow: 0 0 2.5rem -0.25rem rgba(var(--signal-rgb), 0.9);
+}
+.button svg {
+  flex: none;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* ---- glass: a frosted panel. Used for the contact form, its tiles, and the homepage invitation. ---- */
+.glass {
+  border-radius: 1.5rem;
+  background: linear-gradient(145deg, rgba(241, 244, 247, 0.09), rgba(241, 244, 247, 0.025));
+  border: 1px solid rgba(241, 244, 247, 0.14);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  backdrop-filter: blur(22px) saturate(1.5);
+  box-shadow:
+    inset 0 1px 0 rgba(241, 244, 247, 0.16),
+    0 2rem 4rem -2rem rgba(0, 0, 0, 0.7);
+}
+
+/* A soft light that follows the pointer across the whole site (desktop only). */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  body::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 44rem;
+    height: 44rem;
+    margin: -22rem 0 0 -22rem;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(var(--signal-rgb), 0.075), transparent);
+    transform: translate3d(var(--mx, -100vw), var(--my, -100vh), 0);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+/* ---- image frame: a screenshot sitting in a thin graphite mount ---- */
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--graphite);
+  border: 1px solid var(--line);
+}
+.frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- card: a glass panel with a little light that follows the pointer (Skills, Glass Brain on About) ---- */
+.cell {
+  --px: 50%;
+  --py: 0%;
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  justify-items: start;
+  padding: clamp(1.25rem, 1rem + 1.2vw, 2rem);
+  overflow: hidden;
+  transition: border-color var(--fast) ease;
+}
+.cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(22rem circle at var(--px) var(--py), rgba(var(--signal-rgb), 0.2), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.cell:hover {
+  border-color: rgba(var(--signal-rgb), 0.5);
+}
+.cell:hover::before {
+  opacity: 1;
+}
+.cell > * {
+  position: relative;
+}
+.cell-kind {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--signal);
+}
+.cell-lead {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--white);
+  max-width: 52ch;
+}
