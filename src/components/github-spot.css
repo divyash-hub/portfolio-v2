@@ -1,0 +1,133 @@
+.gh {
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 3vw, 4rem);
+  align-items: center;
+  padding-block: clamp(3rem, 2rem + 4vw, 6rem);
+}
+
+/* ---- the mark and its rings ---- */
+.gh-stage {
+  --mx: 0px;
+  --my: 0px;
+  --rx: 0deg;
+  --ry: 0deg;
+  --near: 0;
+  --spin: 0deg;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(78vw, 24rem);
+  aspect-ratio: 1;
+  justify-self: center;
+  border-radius: 50%;
+  perspective: 900px;
+}
+.gh-stage:focus-visible {
+  outline-offset: 0.5rem;
+}
+.gh-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(var(--signal-rgb), calc(0.25 + var(--near) * 0.5));
+  rotate: var(--spin);
+  pointer-events: none;
+}
+/* a small bright body riding each ring */
+.gh-ring::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -0.3rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-left: -0.3rem;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0.9rem var(--signal);
+}
+.gh-ring--inner {
+  inset: 16%;
+  rotate: calc(var(--spin) * -1.6);
+  border-style: solid;
+  border-color: rgba(241, 244, 247, calc(0.08 + var(--near) * 0.2));
+}
+.gh-ring--inner::after {
+  top: auto;
+  bottom: -0.3rem;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-left: -0.22rem;
+  background: var(--white);
+  box-shadow: 0 0 0.6rem var(--white);
+}
+.gh-glow {
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(var(--signal-rgb), calc(0.25 + var(--near) * 0.45)), transparent);
+  filter: blur(18px);
+  translate: var(--mx) var(--my);
+  pointer-events: none;
+}
+.gh-mark {
+  position: relative;
+  width: 42%;
+  fill: var(--white);
+  translate: var(--mx) var(--my);
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(calc(1 + var(--near) * 0.08));
+  filter: drop-shadow(0 0.75rem 1.5rem rgba(0, 0, 0, 0.6))
+    drop-shadow(0 0 calc(var(--near) * 1.6rem) rgba(var(--signal-rgb), 0.8));
+  transition: fill var(--fast) ease;
+}
+.gh-stage:hover .gh-mark,
+.gh-stage:focus-visible .gh-mark {
+  fill: var(--signal);
+}
+/* no pointer to follow: the rings turn slowly on their own */
+@media (prefers-reduced-motion: no-preference) and (hover: none) {
+  .gh-ring {
+    animation: gh-turn 30s linear infinite;
+  }
+  .gh-ring--inner {
+    animation-direction: reverse;
+    animation-duration: 20s;
+  }
+  @keyframes gh-turn {
+    to {
+      rotate: 360deg;
+    }
+  }
+}
+
+/* ---- text ---- */
+.gh-text {
+  display: grid;
+  gap: 1.1rem;
+  justify-items: start;
+}
+.gh-handle {
+  font-size: clamp(1.9rem, 0.8rem + 4.6vw, 4.75rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  overflow-wrap: anywhere;
+}
+.gh-handle span {
+  display: block;
+  font-size: 0.42em;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--silver);
+  margin-bottom: 0.2em;
+}
+.gh-lede {
+  max-width: 42ch;
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+@media (min-width: 60rem) {
+  .gh {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+}

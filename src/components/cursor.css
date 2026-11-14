@@ -1,0 +1,97 @@
+.cursor {
+  display: none;
+}
+html.has-cursor .cursor {
+  display: block;
+}
+/* hide the system pointer everywhere except text fields, which keep their caret */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+html.has-cursor input,
+html.has-cursor textarea {
+  cursor: text !important;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  pointer-events: none;
+  will-change: transform;
+}
+.cursor-dot::after {
+  content: "";
+  position: absolute;
+  left: -0.2rem;
+  top: -0.2rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #fff;
+  mix-blend-mode: difference;
+  transition: opacity 0.2s ease;
+}
+.cursor-dot[data-state="word"]::after,
+.cursor-dot[data-state="text"]::after {
+  opacity: 0;
+}
+
+.cursor-ring {
+  mix-blend-mode: difference;
+}
+.cursor-ring::before {
+  content: "";
+  position: absolute;
+  left: -1.125rem;
+  top: -1.125rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  transition:
+    scale 0.3s var(--ease),
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+.cursor-ring span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--obsidian);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.cursor-ring[data-state="link"]::before {
+  scale: 1.7;
+  background: rgba(255, 255, 255, 0.16);
+}
+.cursor-ring[data-state="text"]::before {
+  opacity: 0;
+}
+/* over something with a word: a solid disc carrying that word */
+.cursor-ring[data-state="word"] {
+  mix-blend-mode: normal;
+}
+.cursor-ring[data-state="word"]::before {
+  scale: 2.6;
+  background: var(--signal);
+  border-color: var(--signal);
+}
+.cursor-ring[data-state="word"] span {
+  opacity: 1;
+}
+.cursor-ring[data-down]::before {
+  scale: 0.8;
+}
+.cursor-ring[data-state="word"][data-down]::before {
+  scale: 2.2;
+}

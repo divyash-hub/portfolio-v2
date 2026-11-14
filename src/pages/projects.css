@@ -1,0 +1,36 @@
+.folders .label,
+.all-projects .label {
+  font-weight: 400;
+}
+
+.folders-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 clamp(1.5rem, 4vw, 3.5rem);
+  /* the folders reserve headroom for their files; pull the row up to meet the heading */
+  margin-top: -3.5rem;
+  padding-bottom: 1rem;
+}
+
+.all-projects {
+  padding-top: clamp(3rem, 2rem + 4vw, 5.5rem);
+}
+.all-projects .label {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 72rem) {
+  .folders-row {
+    justify-content: space-between;
+  }
+}
+
+.projects-next {
+  display: grid;
+  gap: 1rem;
+  padding-top: clamp(3rem, 2rem + 4vw, 5.5rem);
+}
+.projects-next .label {
+  font-weight: 400;
+}

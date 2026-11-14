@@ -1,0 +1,189 @@
+.index-list {
+  border-top: 1px solid var(--line);
+}
+
+.index-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.index-thumb {
+  aspect-ratio: 16 / 10;
+}
+
+.index-text {
+  display: grid;
+  gap: 0.35rem;
+}
+.index-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--white);
+}
+.index-tagline {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 46ch;
+}
+.index-arrow {
+  display: none;
+}
+
+/* ---- wide screens: rows become a ruled table ---- */
+@media (min-width: 60rem) {
+  .index-row {
+    grid-template-columns: 1fr 8.5rem 1.5rem;
+    align-items: center;
+    gap: 1.5rem;
+    padding-block: 1.35rem;
+    transition: padding-left var(--slow) var(--ease);
+  }
+  .index-arrow {
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    transition:
+      color var(--fast) ease,
+      translate var(--slow) var(--ease);
+  }
+  .index-title {
+    transition: color var(--fast) ease;
+  }
+
+  /* plain list (Projects page): small thumbnail on the left */
+  .index:not([data-preview]) .index-row {
+    grid-template-columns: 8rem 1fr 8.5rem 1.5rem;
+  }
+  .index-row:hover .index-arrow,
+  .index-row:focus-visible .index-arrow {
+    color: var(--ice);
+    translate: 4px 0;
+  }
+
+  /* with preview (Home): no thumbnails, a large frame beside the list */
+  .index[data-preview] {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(2rem, 4vw, 4.5rem);
+    align-items: start;
+  }
+  .index[data-preview] .index-thumb {
+    display: none;
+  }
+  .index[data-preview] .index-title {
+    color: var(--silver);
+    font-size: clamp(1.25rem, 0.9rem + 0.9vw, 1.625rem);
+  }
+  .index[data-preview] .index-row[data-current] {
+    padding-left: 0.875rem;
+  }
+  .index[data-preview] .index-row[data-current] .index-title {
+    color: var(--white);
+  }
+  .index[data-preview] .index-row[data-current] .index-arrow {
+    color: var(--ice);
+  }
+
+  .index-preview {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--nav-top) + 1.5rem);
+    display: grid;
+    gap: 1.25rem;
+  }
+  .index-preview-frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+  }
+  .index-preview-facts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    min-height: 3.25rem;
+    font-size: var(--text-sm);
+  }
+  .index-preview-facts dd {
+    color: var(--white);
+    margin-top: 0.2rem;
+  }
+  .index-preview-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .index-preview-item[data-current] {
+    opacity: 1;
+  }
+}
+
+/* ---- tablets: thumbnail beside the text, so four rows don't fill four screens ---- */
+@media (min-width: 40rem) and (max-width: 59.9375rem) {
+  .index-row {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    gap: 0.6rem 1.75rem;
+  }
+  .index-thumb {
+    grid-row: span 2;
+  }
+  .index-text {
+    align-self: end;
+  }
+  .index-kind {
+    align-self: start;
+  }
+}
+
+@media (max-width: 59.9375rem) {
+  .index-preview {
+    display: none;
+  }
+}
+
+/* ---- Projects page list: each row lights up in its project's own colour ---- */
+@media (hover: hover) and (pointer: fine) and (min-width: 60rem) {
+  .index:not([data-preview]) .index-row {
+    position: relative;
+    isolation: isolate;
+  }
+  .index:not([data-preview]) .index-row::before {
+    content: "";
+    position: absolute;
+    inset: 0 -1rem;
+    z-index: -1;
+    border-radius: var(--radius);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--tone) 22%, transparent), transparent 75%);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.5s var(--ease);
+  }
+  .index:not([data-preview]) .index-row:hover::before {
+    clip-path: inset(0 0 0 0);
+  }
+  .index:not([data-preview]) .index-row:hover {
+    padding-left: 1rem;
+  }
+  .index:not([data-preview]) .index-thumb {
+    transition:
+      transform var(--slow) var(--ease),
+      opacity var(--fast) ease;
+  }
+  /* the floating card takes over, so the small thumbnail steps back */
+  .index:not([data-preview]) .index-row:hover .index-thumb {
+    transform: scale(0.9) rotate(-3deg);
+    opacity: 0.4;
+  }
+  .index:not([data-preview]) .index-row:hover .index-title {
+    color: var(--white);
+    letter-spacing: -0.01em;
+  }
+  .index:not([data-preview]) .index-title {
+    transition:
+      color var(--fast) ease,
+      letter-spacing var(--slow) var(--ease);
+  }
+}
