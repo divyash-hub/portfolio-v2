@@ -24,6 +24,14 @@
 }
 
 .nav {
+  --gx: 50%;
+  --gy: 50%;
+  position: relative;
+  isolation: isolate;
+  transition:
+    background 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -182,4 +190,91 @@
     border-radius: 50%;
     background: var(--ice);
   }
+}
+
+/* ---- liquid glass ---- */
+.nav-filter {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+/* Chromium: the page behind the pill bends at the rim, and the glass itself is nearly clear */
+.nav[data-liquid] {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015));
+  -webkit-backdrop-filter: var(--liquid) blur(0.6px) saturate(1.8) brightness(1.05);
+  backdrop-filter: var(--liquid) blur(0.6px) saturate(1.8) brightness(1.05);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 1.5px 1.5px 0 -0.5px rgba(255, 255, 255, 0.45),
+    inset -1px -1px 0 -0.5px rgba(255, 255, 255, 0.18),
+    inset 0 0 1.25rem rgba(255, 255, 255, 0.05),
+    0 0.5rem 1.5rem -0.5rem rgba(0, 0, 0, 0.45),
+    0 1.5rem 3rem -1.5rem rgba(0, 0, 0, 0.6);
+}
+/* the light catching the glass where the pointer is */
+.nav-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(9rem 4rem at var(--gx) var(--gy), rgba(255, 255, 255, 0.16), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.nav:hover .nav-sheen {
+  opacity: 1;
+}
+/* a fine bright rim, brighter on the top-left like light falling on curved glass */
+.nav[data-liquid]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.06) 40%, rgba(255, 255, 255, 0.04) 60%, rgba(255, 255, 255, 0.3));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.nav[data-liquid] .nav-drop {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 1px 1px 0 -0.5px rgba(255, 255, 255, 0.6),
+    inset -1px -1px 0 -0.5px rgba(255, 255, 255, 0.2),
+    0 0.25rem 0.75rem -0.25rem rgba(0, 0, 0, 0.35);
+}
+
+/* Floating over a light part of the page (a pale project panel): dark text, milkier glass. */
+.nav[data-on-light] {
+  color: #0b0d10;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.22));
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.nav[data-on-light] .nav-mark,
+.nav[data-on-light] .nav-link[aria-current="page"],
+.nav[data-on-light] .nav-link:hover,
+.nav[data-on-light] .nav-toggle {
+  color: #0b0d10;
+}
+.nav[data-on-light] .nav-link {
+  color: rgba(11, 13, 16, 0.7);
+}
+.nav[data-on-light] .nav-mark svg {
+  color: #0b0d10;
+}
+.nav[data-on-light] .nav-links {
+  border-left-color: rgba(0, 0, 0, 0.12);
+}
+.nav[data-on-light] .nav-drop {
+  background: rgba(255, 255, 255, 0.6);
+}
+.nav-mark,
+.nav-link {
+  transition: color 0.5s ease;
 }
