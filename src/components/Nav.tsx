@@ -92,8 +92,15 @@ export default function Nav() {
       }
       setOnLight((lum ?? 0) > 0.3);
     };
+    let lastCheck = 0;
+    let settle = 0;
     const queue = () => {
-      if (!frame) frame = requestAnimationFrame(check);
+      window.clearTimeout(settle);
+      settle = window.setTimeout(check, 120); // once more after scrolling stops
+      const now = performance.now();
+      if (frame || now - lastCheck < 100) return;
+      lastCheck = now;
+      frame = requestAnimationFrame(check);
     };
     check();
     window.addEventListener("scroll", queue, { passive: true });
@@ -102,6 +109,7 @@ export default function Nav() {
     return () => {
       cancelAnimationFrame(frame);
       window.clearTimeout(late);
+      window.clearTimeout(settle);
       window.removeEventListener("scroll", queue);
       window.removeEventListener("resize", queue);
     };

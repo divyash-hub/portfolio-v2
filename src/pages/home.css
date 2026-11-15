@@ -74,7 +74,6 @@
 .ch {
   --h: 0; /* how close the pointer is, 0 to 1; set from home-motion.ts */
   display: inline-block;
-  will-change: transform;
   /* separate from the transform that scrolling uses, so the two add together */
   translate: var(--tx, 0px) calc(var(--ty, 0px) + var(--h) * -0.04em);
   scale: calc(1 + var(--h) * 0.14);
@@ -205,7 +204,6 @@
 .wi {
   display: inline-block;
   transform-origin: 0 100%;
-  will-change: transform;
 }
 .wi[data-accent] {
   color: var(--signal);

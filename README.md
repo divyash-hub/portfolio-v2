@@ -49,4 +49,4 @@ npm run preview  # serve the production build locally
 
 The build output in `dist/` is a static site. `netlify.toml` sets the Netlify build (`npm run build`, publish `dist`), and `public/_redirects` sends every path to `index.html` so project pages work as real URLs.
 
-Once the domain is known: add a canonical URL and an Open Graph share image to `index.html`, and add a `sitemap.xml`.
+The live address is https://divyashportfolio.netlify.app. The link preview (`public/og-image.jpg`, tags in `index.html`) and `public/sitemap.xml` use it; update both if the domain changes.

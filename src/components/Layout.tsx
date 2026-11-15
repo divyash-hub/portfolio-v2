@@ -39,15 +39,30 @@ export default function Layout() {
     };
   }, []);
 
-  // A soft light follows the pointer (see body::after in base.css).
+  // A soft light follows the pointer. It moves one element directly, at most once a frame,
+  // so the rest of the page never has to be restyled.
+  const lightRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const light = lightRef.current;
+    if (!light) return;
+    let x = 0;
+    let y = 0;
+    let frame = 0;
+    const paint = () => {
+      frame = 0;
+      light.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    };
     const move = (e: PointerEvent) => {
       if (e.pointerType === "touch") return;
-      document.documentElement.style.setProperty("--mx", `${e.clientX}px`);
-      document.documentElement.style.setProperty("--my", `${e.clientY}px`);
+      x = e.clientX;
+      y = e.clientY;
+      if (!frame) frame = requestAnimationFrame(paint);
     };
     window.addEventListener("pointermove", move, { passive: true });
-    return () => window.removeEventListener("pointermove", move);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("pointermove", move);
+    };
   }, []);
 
   // On navigation: start at the top and hand keyboard focus to the new page.
@@ -71,6 +86,7 @@ export default function Layout() {
       <a className="skip" href="#content">
         Skip to content
       </a>
+      <div className="pointer-light" ref={lightRef} aria-hidden="true" />
       <Cursor />
       <EasterEgg />
       <Nav />

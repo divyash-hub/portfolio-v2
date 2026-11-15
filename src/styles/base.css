@@ -249,8 +249,7 @@ main {
 
 /* A soft light that follows the pointer across the whole site (desktop only). */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  body::after {
-    content: "";
+  .pointer-light {
     position: fixed;
     left: 0;
     top: 0;
@@ -259,9 +258,15 @@ main {
     margin: -22rem 0 0 -22rem;
     border-radius: 50%;
     background: radial-gradient(closest-side, rgba(var(--signal-rgb), 0.075), transparent);
-    transform: translate3d(var(--mx, -100vw), var(--my, -100vh), 0);
+    transform: translate3d(-100vw, -100vh, 0);
     pointer-events: none;
     z-index: -1;
+    will-change: transform;
+  }
+}
+@media not ((hover: hover) and (prefers-reduced-motion: no-preference)) {
+  .pointer-light {
+    display: none;
   }
 }
 

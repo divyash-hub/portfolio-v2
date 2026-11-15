@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://divyashportfolio.netlify.app/sitemap.xml
