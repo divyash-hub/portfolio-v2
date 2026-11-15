@@ -28,7 +28,7 @@ npm run preview  # serve the production build locally
 
 ## Common edits
 
-- **Résumé button:** paste the Google Drive share link into `resumeUrl` in `src/data/site.ts`. The buttons on About, Experience and Contact appear by themselves; a Drive link is turned into a direct download.
+- **Résumé:** `public/Divyash-Agrawal-CV.pdf`. Replace that file to update it. The "View résumé" buttons (About, Experience, Contact) open it in a new tab; `resumeUrl` in `src/data/site.ts` points at it.
 - **Add a project:** put screenshots in `assets-source/` named `<slug>-<name>.png`, add the slug to `SLUGS` in `scripts/optimise-images.mjs`, run `npm run images`, then copy an entry in `src/data/projects.ts`. Every listing, the case study page and previous/next links read from that array.
 - **Photos kept out of the way:** a project's `hiddenPhotos` only show when a visitor clicks "Show the photos" (used for the dice breadboard).
 - **Experience and certificates:** the `experience` and `certificates` arrays in `src/data/site.ts`.
@@ -36,7 +36,7 @@ npm run preview  # serve the production build locally
 
 ## Hidden things
 
-- Type **warp** anywhere (or the Konami code: ↑ ↑ ↓ ↓ ← → ← → B A) for the warp drive.
+- Type **warp**, **zesty**, **gudda**, **divyash**, **fair** or **kanye** anywhere (or the Konami code: ↑ ↑ ↓ ↓ ← → ← → B A) for the warp drive.
 - Unknown addresses show the "Lost in orbit" 404 page.
 
 ## Browser notes

@@ -16,10 +16,10 @@ export const site = {
   /** Where the contact form sends messages (Formspree forwards them to your inbox). */
   formEndpoint: "https://formspree.io/f/mgolodbj",
   /**
-   * The résumé (a Google Drive share link). Leave empty to hide every résumé button;
-   * paste the link here and they all appear.
+   * The résumé: a PDF in /public, opened in a new tab so visitors can read it first
+   * (the browser's own viewer has a download button). Leave empty to hide every résumé button.
    */
-  resumeUrl: "",
+  resumeUrl: "/Divyash-Agrawal-CV.pdf",
   course: "BCA, 2nd semester",
   university: "Christ University, Bangalore",
   campus: "Bangalore Central Campus",

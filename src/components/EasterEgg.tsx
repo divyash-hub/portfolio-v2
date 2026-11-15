@@ -4,13 +4,15 @@ import "./easter-egg.css";
 /*
  * The hidden one.
  *
- * Type the Konami code (up, up, down, down, left, right, left, right, B, A) or just
- * type "warp" anywhere on the site. The stars stretch into hyperspace for a couple
+ * Type the Konami code (up, up, down, down, left, right, left, right, B, A), or one of
+ * the secret words (warp, zesty, gudda, divyash, fair, kanye) anywhere on the site. The stars stretch into hyperspace for a couple
  * of seconds, the project orbit on the homepage spins up, and a small note says
  * you found it. A hint is left in the browser console for the curious.
  */
 const KONAMI = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "arrowleft", "arrowright", "b", "a"];
-const WORD = "warp";
+/** Typing any of these anywhere (outside a form) also fires it. */
+const WORDS = ["warp", "zesty", "gudda", "divyash", "fair", "kanye"];
+const LONGEST = Math.max(...WORDS.map((w) => w.length));
 
 export default function EasterEgg() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -32,8 +34,8 @@ export default function EasterEgg() {
       if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return; // never while typing in a form
       const k = e.key.toLowerCase();
       keys = [...keys, k].slice(-KONAMI.length);
-      typed = (typed + (k.length === 1 ? k : " ")).slice(-WORD.length);
-      if (keys.join() === KONAMI.join() || typed === WORD) {
+      typed = (typed + (k.length === 1 ? k : " ")).slice(-LONGEST);
+      if (keys.join() === KONAMI.join() || WORDS.some((w) => typed.endsWith(w))) {
         keys = [];
         typed = "";
         window.dispatchEvent(new CustomEvent("warp"));
