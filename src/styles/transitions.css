@@ -1,0 +1,49 @@
+/* Page transitions (driven by usePageTransitions.ts). */
+
+/* the nav bar is its own layer, so it holds still while the page underneath changes */
+.nav-wrap {
+  view-transition-name: site-nav;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.75s;
+}
+
+/* the old page sinks back and dims */
+::view-transition-old(root) {
+  animation: vt-sink 0.75s cubic-bezier(0.7, 0, 0.3, 1) both;
+}
+/* the new page opens as a circle from where you clicked, with a ring of light at its edge */
+::view-transition-new(root) {
+  animation: vt-open 0.75s cubic-bezier(0.65, 0, 0.25, 1) both;
+}
+
+@keyframes vt-sink {
+  to {
+    scale: 0.94;
+    opacity: 0.35;
+    filter: blur(6px) brightness(0.6);
+  }
+}
+@keyframes vt-open {
+  from {
+    clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+  to {
+    clip-path: circle(150% at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+}
+
+::view-transition-group(site-nav),
+::view-transition-old(site-nav),
+::view-transition-new(site-nav) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

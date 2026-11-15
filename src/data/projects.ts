@@ -54,6 +54,8 @@ export type Project = {
   /** Used when there is no photograph yet: an honest diagram instead of a fake image. */
   coverGraphic?: "binary-leds";
   gallery?: ProjectImage[];
+  /** Photos kept out of the way: shown only when the visitor asks to see them. */
+  hiddenPhotos?: ProjectImage[];
   links: ProjectLink[];
   sections: ProjectSection[];
   /** Credits for data, assets or people. */
@@ -319,6 +321,18 @@ export const projects: Project[] = [
     team: "Built as a team for a Digital Logic Design exhibition at Christ University.",
     coverGraphic: "binary-leds",
     demo: "dice",
+    hiddenPhotos: [
+      {
+        src: img("digital-electronic-dice", "build-lit"),
+        alt: "The real dice on a breadboard, powered on: a tangle of jumper wires over the logic chips, with LEDs lit at the front.",
+        caption: "Powered on, with the result showing on the LEDs.",
+      },
+      {
+        src: img("digital-electronic-dice", "build"),
+        alt: "The same breadboard switched off, showing the chips, jumper wires, push button and the four LEDs.",
+        caption: "Switched off: the chips, the wiring and the push button.",
+      },
+    ],
     links: [
       {
         label: "Read the LinkedIn post",
@@ -348,7 +362,6 @@ export const projects: Project[] = [
       },
     ],
     ownerNotes: [
-      "No photos supplied yet. Add them as assets-source/digital-electronic-dice-<name>.png, run `npm run images`, then set `cover` and `gallery` here.",
       "Which parts did you personally design, wire, test or present? Add a sentence to 'Who built it'.",
       "Chip numbers, team size and teammates' names are deliberately left out until confirmed (and until teammates agree to be named).",
     ],

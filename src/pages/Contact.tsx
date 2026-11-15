@@ -1,5 +1,6 @@
 import { useState, type FormEvent, type JSX } from "react";
 import LocalTime from "../components/LocalTime";
+import ResumeButton from "../components/ResumeButton";
 import { ArrowOut, ArrowRight } from "../components/Icons";
 import { site } from "../data/site";
 import { usePageMeta } from "../hooks/usePageMeta";
@@ -105,6 +106,9 @@ export default function Contact() {
           A project, a role, or a question about something on this site. The form lands straight in my inbox, and I reply
           by email.
         </p>
+        <div className="button-row">
+          <ResumeButton />
+        </div>
       </header>
 
       <div className="shell contact-grid">

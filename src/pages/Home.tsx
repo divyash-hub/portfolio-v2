@@ -77,7 +77,8 @@ export default function Home() {
         <h2 id="about-heading" className="kicker">
           Who's this?
         </h2>
-        <p className="reveal" aria-label={about.statement.replace(/\*/g, "")}>
+        <p className="reveal">
+          <span className="sr-only">{about.statement.replace(/\*/g, "")}</span>
           {words.map((w, i) => (
             <span key={i} className="w" aria-hidden="true">
               <span className="wi" data-accent={w.accent || undefined}>
@@ -187,6 +188,9 @@ export default function Home() {
                   /* no photo of the dice yet, so here it is to play with */
                   <div className="work-card-shot work-card-shot--live">
                     <DiceDemo />
+                    <Link to={`/projects/${p.slug}#the-real-build`} className="work-card-peek">
+                      See the real breadboard <ArrowRight />
+                    </Link>
                   </div>
                 ) : (
                   <Link to={`/projects/${p.slug}`} className="work-card-shot" tabIndex={-1} aria-hidden="true" data-cursor="Open">

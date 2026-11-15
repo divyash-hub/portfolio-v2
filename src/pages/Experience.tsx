@@ -2,8 +2,9 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight } from "../components/Icons";
-import { experience } from "../data/site";
+import { ArrowOut, ArrowRight } from "../components/Icons";
+import ResumeButton from "../components/ResumeButton";
+import { certificates, experience } from "../data/site";
 import { usePageMeta } from "../hooks/usePageMeta";
 import "./pages.css";
 import "./experience.css";
@@ -26,6 +27,9 @@ export default function Experience() {
         { "--draw": "0%" },
         { "--draw": "100%", ease: "none", scrollTrigger: { trigger: list, start: "top 75%", end: "bottom 60%", scrub: 0.4 } },
       );
+      gsap.utils.toArray<HTMLElement>(".cert").forEach((item, i) => {
+        gsap.from(item, { y: 30, opacity: 0, duration: 0.7, delay: (i % 3) * 0.08, ease: "power3.out", scrollTrigger: { trigger: item, start: "top 90%", once: true } });
+      });
       gsap.utils.toArray<HTMLElement>(".xp", list).forEach((item) => {
         gsap.from(item, { y: 40, opacity: 0, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: item, start: "top 85%", once: true } });
       });
@@ -37,7 +41,10 @@ export default function Experience() {
     <>
       <header className="shell page-head">
         <h1>Experience</h1>
-        <p className="lede">Where I've worked, where I'm studying, and what I've won along the way.</p>
+        <p className="lede">Where I've worked, where I'm studying, what I've won, and a few certificates along the way.</p>
+        <div className="button-row">
+          <ResumeButton solid />
+        </div>
       </header>
 
       <ol className="shell xp-list" ref={listRef}>
@@ -61,6 +68,38 @@ export default function Experience() {
           </li>
         ))}
       </ol>
+
+      <section className="shell certs" aria-labelledby="certs-heading">
+        <header className="certs-head">
+          <p className="kicker">Certificates</p>
+          <h2 id="certs-heading">A few I'm glad I did.</h2>
+        </header>
+        <ul className="certs-grid">
+          {certificates.map((c) => (
+            <li key={c.issuer} className="glass cert">
+              <p className="cert-top">
+                <span className="cert-issuer">{c.issuer}</span>
+                <span className="cert-date">{c.date}</span>
+              </p>
+              <ul className="cert-courses">
+                {c.courses.map((course) => (
+                  <li key={course.title}>
+                    {course.verify ? (
+                      <a href={course.verify} target="_blank" rel="noreferrer">
+                        {course.title} <ArrowOut />
+                        <span className="sr-only"> (verify, opens in a new tab)</span>
+                      </a>
+                    ) : (
+                      course.title
+                    )}
+                  </li>
+                ))}
+              </ul>
+              {c.note && <p className="cert-note">{c.note}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
     </>
   );
 }

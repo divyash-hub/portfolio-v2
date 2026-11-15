@@ -1,12 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { Link, Outlet, useLocation } from "react-router";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 import Cursor from "./Cursor";
+import EasterEgg from "./EasterEgg";
 import LocalTime from "./LocalTime";
 import Nav from "./Nav";
+import { usePageTransitions } from "./usePageTransitions";
+import "../styles/transitions.css";
 import { ArrowOut } from "./Icons";
 import { publicProjects } from "../data/projects";
 import { footerPages, site } from "../data/site";
@@ -17,6 +20,7 @@ export default function Layout() {
   const mainRef = useRef<HTMLElement>(null);
   const first = useRef(true);
   const lenisRef = useRef<Lenis | null>(null);
+  usePageTransitions();
 
   // Smooth, weighted scrolling, which the homepage's scroll story is tuned for.
   // Skipped for people who ask for reduced motion; the page then scrolls natively.
@@ -47,7 +51,7 @@ export default function Layout() {
   }, []);
 
   // On navigation: start at the top and hand keyboard focus to the new page.
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (first.current) {
       first.current = false;
       return;
@@ -68,6 +72,7 @@ export default function Layout() {
         Skip to content
       </a>
       <Cursor />
+      <EasterEgg />
       <Nav />
       <main id="content" ref={mainRef} tabIndex={-1}>
         <Outlet />

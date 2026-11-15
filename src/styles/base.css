@@ -339,3 +339,8 @@ main {
   color: var(--white);
   max-width: 52ch;
 }
+
+/* rows whose only button is hidden take no space */
+.button-row:empty {
+  display: none;
+}

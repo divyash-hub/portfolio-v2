@@ -15,6 +15,11 @@ export const site = {
   email: "divyashforwork@gmail.com",
   /** Where the contact form sends messages (Formspree forwards them to your inbox). */
   formEndpoint: "https://formspree.io/f/mgolodbj",
+  /**
+   * The résumé (a Google Drive share link). Leave empty to hide every résumé button;
+   * paste the link here and they all appear.
+   */
+  resumeUrl: "",
   course: "BCA, 2nd semester",
   university: "Christ University, Bangalore",
   campus: "Bangalore Central Campus",
@@ -39,13 +44,6 @@ export const about = {
     body: [
       "I love the moment an idea stops being an idea. The page loads, the planet moves, the LED finally lights up, and now it's a real thing someone else can open and use.",
       "That's why the work here is such a mix. I didn't pick a lane and stay in it. I built what I was curious about, and I cared about how each one works underneath, not only how it looks. HELIOS places its planets by solving an orbital equation every frame. The dice has no code in it at all.",
-    ],
-  },
-  background: {
-    heading: "Where I am right now",
-    body: [
-      "I'm in the 2nd semester of my BCA at Christ University, Bangalore Central Campus. The electronic dice came out of a Digital Logic Design exhibition there, and the university is also where I debate in Asian and British Parliamentary formats.",
-      "I'm early in this, and I'm fine with that. I'd rather show you a few real things that run than a long list of buzzwords.",
     ],
   },
   exploring: {
@@ -271,6 +269,63 @@ export const experience: ExperienceEntry[] = [
     title: "Honourable Mention (3rd place)",
     organisation: "Kristu Jayanti MUN",
     dates: "February 2026",
+  },
+];
+
+/* ---------------- Certificates ----------------
+ * A curated few, grouped by issuer. The full set lives offline; only the strongest
+ * and most relevant are listed. `verify` links are the issuers' own public pages.
+ */
+
+export type Certificate = {
+  issuer: string;
+  date: string;
+  courses: { title: string; verify?: string }[];
+  note?: string;
+};
+
+export const certificates: Certificate[] = [
+  {
+    issuer: "Anthropic",
+    date: "February 2026",
+    courses: [
+      { title: "Building with the Claude API", verify: "https://verify.skilljar.com/c/q7qkiz7mvgs2" },
+      { title: "Claude Code in Action", verify: "https://verify.skilljar.com/c/xw9drvwtfrxx" },
+      { title: "Introduction to Model Context Protocol", verify: "https://verify.skilljar.com/c/4bnda3bcpyvb" },
+      { title: "Model Context Protocol: Advanced Topics", verify: "https://verify.skilljar.com/c/65cwfexjzc2v" },
+    ],
+  },
+  {
+    issuer: "Infosys Springboard",
+    date: "December 2025",
+    courses: [{ title: "Front End Web Developer Certification" }],
+    note: "Along with its HTML5, CSS3 and JavaScript courses.",
+  },
+  {
+    issuer: "NASSCOM",
+    date: "October 2025",
+    courses: [{ title: "Digital Engineering" }],
+    note: "An assessment aligned to the competency standard NASSCOM developed with the engineering R&D industry.",
+  },
+  {
+    issuer: "MongoDB University",
+    date: "January 2026",
+    courses: [{ title: "MongoDB Database Admin Path (Self-Managed)" }, { title: "Introduction to MongoDB" }],
+  },
+  {
+    issuer: "Udemy",
+    date: "January 2026",
+    courses: [{ title: "Node JS: Advanced Concepts" }, { title: "The Complete Git Guide: Understand and master Git and GitHub" }],
+    note: "16 and 23.5 hours of video.",
+  },
+  {
+    issuer: "Microsoft Learnathon '25",
+    date: "September to October 2025",
+    courses: [
+      { title: "Get started with Microsoft Copilot" },
+      { title: "Describe the concepts of cybersecurity" },
+      { title: "Learn AI and Gen AI basics" },
+    ],
   },
 ];
 

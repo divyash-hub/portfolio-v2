@@ -42,6 +42,7 @@ export default function OrbitHero({ projects }: { projects: Project[] }) {
     let SIN = Math.sin(TILT);
     let stars: { x: number; y: number; r: number; p: number }[] = [];
     let time = 0;
+    let boost = 1; // the easter egg spins the orbit up for a while
     let last = 0;
     let frame = 0;
     let visible = true;
@@ -169,7 +170,8 @@ export default function OrbitHero({ projects }: { projects: Project[] }) {
       frame = 0;
       const dt = Math.min(0.05, (now - last) / 1000 || 0);
       last = now;
-      if (!held.current) time += dt;
+      if (!held.current) time += dt * boost;
+      boost += (1 - boost) * 0.01;
       px += (mx - px) * 0.06;
       py += (my - py) * 0.06;
       draw();
@@ -204,12 +206,18 @@ export default function OrbitHero({ projects }: { projects: Project[] }) {
     root.dataset.ready = "";
     start();
     window.addEventListener("pointermove", onMove);
+    const onWarp = () => {
+      boost = 40;
+      start();
+    };
+    window.addEventListener("warp", onWarp);
 
     return () => {
       cancelAnimationFrame(frame);
       resize.disconnect();
       seen.disconnect();
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("warp", onWarp);
     };
   }, [projects]);
 

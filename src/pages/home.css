@@ -744,3 +744,31 @@
 .home-contact-mail:focus-visible {
   background-size: 100% 1px;
 }
+
+/* the dice panel: a quiet way to the photos of the real thing */
+.work-card-shot--live {
+  position: relative;
+}
+.work-card-peek {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: rgba(8, 10, 13, 0.7);
+  color: var(--silver);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  transition:
+    color var(--fast) ease,
+    border-color var(--fast) ease;
+}
+.work-card-peek:hover,
+.work-card-peek:focus-visible {
+  color: var(--white);
+  border-color: var(--signal);
+}

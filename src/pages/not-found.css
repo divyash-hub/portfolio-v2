@@ -1,0 +1,145 @@
+/* The 404 page: "Lost in orbit". */
+.lost {
+  display: grid;
+  gap: clamp(2rem, 1.5rem + 3vw, 4rem);
+  align-items: center;
+  min-height: calc(100svh - var(--nav-height) - var(--nav-top) - 4rem);
+  padding-block: clamp(2rem, 1rem + 4vw, 5rem);
+}
+@media (min-width: 60rem) {
+  .lost {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  }
+}
+
+.lost-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  font-family: var(--font-hero);
+  font-size: clamp(5.5rem, 2rem + 11vw, 13rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--white);
+}
+
+/* the planet standing in for the 0 */
+.lost-code > * {
+  flex: none; /* the planet must never be squeezed smaller than the digits */
+}
+.lost-planet {
+  --size: 0.78em;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.95), rgba(184, 215, 234, 0.9) 18%, #4f7a99 52%, #13202b 78%);
+  box-shadow:
+    inset -0.06em -0.05em 0.12em rgba(0, 0, 0, 0.6),
+    0 0 0.25em rgba(var(--signal-rgb), 0.45);
+  transition:
+    scale 0.5s var(--ease),
+    box-shadow 0.5s ease;
+}
+.lost-planet:hover,
+.lost-planet:focus-visible {
+  scale: 1.06;
+  box-shadow:
+    inset -0.06em -0.05em 0.12em rgba(0, 0, 0, 0.6),
+    0 0 0.45em rgba(var(--signal-rgb), 0.8);
+}
+.lost-ring {
+  position: absolute;
+  width: 165%;
+  height: 34%;
+  border-radius: 50%;
+  border: 0.018em solid rgba(241, 244, 247, 0.55);
+  rotate: -18deg;
+  /* only the front half of the ring crosses over the planet */
+  clip-path: inset(48% 0 0 0);
+  pointer-events: none;
+}
+.lost-orbit {
+  position: absolute;
+  inset: -36%;
+  border-radius: 50%;
+  border: 1px dashed rgba(var(--signal-rgb), 0.35);
+  pointer-events: none;
+}
+.lost-moon {
+  position: absolute;
+  left: 50%;
+  top: -0.045em;
+  width: 0.09em;
+  height: 0.09em;
+  margin-left: -0.045em;
+  border-radius: 50%;
+  background: var(--white);
+  box-shadow: 0 0 0.12em var(--signal);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lost-orbit {
+    animation: lost-spin 9s linear infinite;
+  }
+  .lost-planet:hover .lost-orbit {
+    animation-duration: 1.6s;
+  }
+  .lost-code > span {
+    animation: lost-drift 6s ease-in-out infinite;
+  }
+  .lost-code > span:last-child {
+    animation-delay: -3s;
+  }
+  @keyframes lost-spin {
+    to {
+      rotate: 360deg;
+    }
+  }
+  @keyframes lost-drift {
+    50% {
+      translate: 0 -0.05em;
+      rotate: -3deg;
+    }
+  }
+}
+
+.lost-text {
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+.lost-text h1 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  max-width: 16ch;
+}
+.lost-text .lede {
+  max-width: 44ch;
+}
+.lost-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.lost-list a {
+  display: inline-flex;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: var(--text-sm);
+  color: var(--white);
+  transition:
+    border-color var(--fast) ease,
+    color var(--fast) ease;
+}
+.lost-list a:hover,
+.lost-list a:focus-visible {
+  border-color: var(--signal);
+  color: var(--signal);
+}

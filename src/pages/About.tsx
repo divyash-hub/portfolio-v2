@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "../components/Icons";
 import GlassBrain from "../components/GlassBrain";
+import ResumeButton from "../components/ResumeButton";
 import ProjectCover from "../components/ProjectCover";
 import { publicProjects } from "../data/projects";
 import { about, debating, facts, offScreen, site, traits } from "../data/site";
@@ -92,6 +93,9 @@ export default function About() {
             Hi, I'm {site.firstName}.<span>I can't leave an idea alone.</span>
           </h1>
           <p className="about-lede">{about.intro[1]}</p>
+          <div className="button-row">
+            <ResumeButton solid />
+          </div>
         </div>
         <figure className="about-photo" ref={photoRef}>
           <img
