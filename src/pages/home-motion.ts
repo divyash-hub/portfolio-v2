@@ -258,13 +258,24 @@ export function setupHomeMotion(root: HTMLElement) {
       stage.style.fontSize = size < 1 ? `calc(${size.toFixed(3)} * clamp(2.25rem, 0.5rem + 7.4vw, 8rem))` : "";
       const settled = Math.round(settledShare * text.length);
       const tick = Math.floor(state.p * 500);
-      let html = "";
+      // built as nodes, not an HTML string, so the page can enforce Trusted Types
+      const parts: (string | HTMLSpanElement)[] = [];
+      let run = "";
       for (let k = 0; k < text.length; k++) {
         const ch = text[k];
-        if (k < settled || ch === " ") html += ch;
-        else html += `<span class="g">${NOISE[(k * 7 + tick) % NOISE.length]}</span>`;
+        if (k < settled || ch === " ") {
+          run += ch;
+          continue;
+        }
+        if (run) parts.push(run);
+        run = "";
+        const g = document.createElement("span");
+        g.className = "g";
+        g.textContent = NOISE[(k * 7 + tick) % NOISE.length];
+        parts.push(g);
       }
-      stage.innerHTML = html;
+      if (run) parts.push(run);
+      stage.replaceChildren(...parts);
       stage.toggleAttribute("data-last", last);
       if (meter) meter.textContent = `${i + 1} / ${beats.length}`;
     };

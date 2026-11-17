@@ -10,3 +10,4 @@ dist
 reference/
 .claude/
 *.tsbuildinfo
+brag-output*/
